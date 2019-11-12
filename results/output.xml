@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20191103 16:43:55.270" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
+<suite source="c:\ninjaplus\specs" id="s1" name="Specs">
+<suite source="c:\ninjaplus\specs\login.robot" id="s1-s1" name="Login">
+<test id="s1-s1-t1" name="Login com sucesso">
+<kw name="Fazendo Login com &quot;tiago@ninjaplus.com&quot; e senha &quot;pwd123&quot;" library="login_steps">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>http://ninjaplus-web:5000/login</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20191103 16:43:57.019" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191103 16:44:06.247" starttime="20191103 16:43:57.019"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191103 16:44:10.448" starttime="20191103 16:44:06.247"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>id:emailId</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191103 16:44:10.449" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'id:emailId'.</msg>
+<status status="PASS" endtime="20191103 16:44:10.706" starttime="20191103 16:44:10.448"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>id:passId</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191103 16:44:10.707" level="INFO">Typing text 'pwd123' into text field 'id:passId'.</msg>
+<status status="PASS" endtime="20191103 16:44:10.813" starttime="20191103 16:44:10.707"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>id:login</arg>
+</arguments>
+<msg timestamp="20191103 16:44:10.813" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191103 16:44:10.926" starttime="20191103 16:44:10.813"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20191103 16:44:15.968" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" endtime="20191103 16:44:15.968" starttime="20191103 16:44:10.927"></status>
+</kw>
+<status status="PASS" endtime="20191103 16:44:15.968" starttime="20191103 16:43:57.019"></status>
+</kw>
+<kw name="Devo ver o meu nome &quot;Tiago&quot; na área logada" library="login_steps">
+<kw name="Page Should Contain" library="SeleniumLibrary">
+<doc>Verifies that current page contains ``text``.</doc>
+<arguments>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20191103 16:44:15.997" level="INFO">Current page contains text 'Tiago'.</msg>
+<status status="PASS" endtime="20191103 16:44:15.997" starttime="20191103 16:44:15.969"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191103 16:44:18.306" starttime="20191103 16:44:15.998"></status>
+</kw>
+<status status="PASS" endtime="20191103 16:44:18.307" starttime="20191103 16:44:15.968"></status>
+</kw>
+<status status="PASS" endtime="20191103 16:44:18.307" critical="yes" starttime="20191103 16:43:57.018"></status>
+</test>
+<doc>O usuário informa suas credenciais de acesso e submete o formulário de login</doc>
+<status status="PASS" endtime="20191103 16:44:18.341" starttime="20191103 16:43:55.304"></status>
+</suite>
+<status status="PASS" endtime="20191103 16:44:18.344" starttime="20191103 16:43:55.275"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Specs" pass="1">Specs</stat>
+<stat fail="0" id="s1-s1" name="Login" pass="1">Specs.Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
