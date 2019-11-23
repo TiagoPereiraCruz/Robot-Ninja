@@ -9,11 +9,3 @@ Test Teardown   Fechar navegador
 Login com sucesso
   Fazendo Login com "tiago@ninjaplus.com" e senha "pwd123"
   Devo ver o meu nome "Tiago" na área logada
-
-Email deve ser requerido
-  Fazendo Login com "" e senha "pwd123"
-  Devo ver a seguinte mensagem de alerta "Opps. Cadê o email?"
-
-Senha deve ser requerida
-  Fazendo Login com "tiago@ninjaplus.com" e senha ""
-  Devo ver a seguinte mensagem de alerta "Opps. Cadê a senha?"

@@ -1,90 +1,400 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot rpa="false" generated="20191103 16:43:55.270" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
+<robot rpa="false" generated="20191123 10:48:36.421" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
 <suite source="c:\ninjaplus\specs" id="s1" name="Specs">
-<suite source="c:\ninjaplus\specs\login.robot" id="s1-s1" name="Login">
+<suite source="c:\ninjaplus\specs\login_com_sucesso.robot" id="s1-s1" name="Login Com Sucesso">
 <test id="s1-s1-t1" name="Login com sucesso">
-<kw name="Fazendo Login com &quot;tiago@ninjaplus.com&quot; e senha &quot;pwd123&quot;" library="login_steps">
+<kw type="setup" name="Abrir navegador" library="login_steps">
 <kw name="Open Browser" library="SeleniumLibrary">
 <doc>Opens a new browser instance to the optional ``url``.</doc>
 <arguments>
 <arg>http://ninjaplus-web:5000/login</arg>
 <arg>chrome</arg>
 </arguments>
-<msg timestamp="20191103 16:43:57.019" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191103 16:44:06.247" starttime="20191103 16:43:57.019"></status>
+<msg timestamp="20191123 10:48:36.914" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191123 10:48:46.494" starttime="20191123 10:48:36.914"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:48:46.497" starttime="20191123 10:48:46.494"></status>
 </kw>
 <kw name="Maximize Browser Window" library="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191103 16:44:10.448" starttime="20191103 16:44:06.247"></status>
+<status status="PASS" endtime="20191123 10:48:50.655" starttime="20191123 10:48:46.497"></status>
 </kw>
+<status status="PASS" endtime="20191123 10:48:50.655" starttime="20191123 10:48:36.913"></status>
+</kw>
+<kw name="Fazendo Login com &quot;tiago@ninjaplus.com&quot; e senha &quot;pwd123&quot;" library="login_steps">
 <kw name="Input Text" library="SeleniumLibrary">
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
 <arguments>
-<arg>id:emailId</arg>
+<arg>${INPUT_EMAIL}</arg>
 <arg>${email}</arg>
 </arguments>
-<msg timestamp="20191103 16:44:10.449" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'id:emailId'.</msg>
-<status status="PASS" endtime="20191103 16:44:10.706" starttime="20191103 16:44:10.448"></status>
+<msg timestamp="20191123 10:48:50.675" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191123 10:48:50.967" starttime="20191123 10:48:50.674"></status>
 </kw>
 <kw name="Input Text" library="SeleniumLibrary">
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
 <arguments>
-<arg>id:passId</arg>
+<arg>${INPUT_PASS}</arg>
 <arg>${pass}</arg>
 </arguments>
-<msg timestamp="20191103 16:44:10.707" level="INFO">Typing text 'pwd123' into text field 'id:passId'.</msg>
-<status status="PASS" endtime="20191103 16:44:10.813" starttime="20191103 16:44:10.707"></status>
+<msg timestamp="20191123 10:48:50.968" level="INFO">Typing text 'pwd123' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191123 10:48:51.067" starttime="20191123 10:48:50.968"></status>
 </kw>
 <kw name="Click Button" library="SeleniumLibrary">
 <doc>Clicks the button identified by ``locator``.</doc>
 <arguments>
-<arg>id:login</arg>
+<arg>${BUTTON_SUBMIT}</arg>
 </arguments>
-<msg timestamp="20191103 16:44:10.813" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191103 16:44:10.926" starttime="20191103 16:44:10.813"></status>
+<msg timestamp="20191123 10:48:51.068" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191123 10:48:51.193" starttime="20191123 10:48:51.067"></status>
 </kw>
-<kw name="Sleep" library="BuiltIn">
-<doc>Pauses the test executed for the given time.</doc>
-<arguments>
-<arg>5</arg>
-</arguments>
-<msg timestamp="20191103 16:44:15.968" level="INFO">Slept 5 seconds</msg>
-<status status="PASS" endtime="20191103 16:44:15.968" starttime="20191103 16:44:10.927"></status>
-</kw>
-<status status="PASS" endtime="20191103 16:44:15.968" starttime="20191103 16:43:57.019"></status>
+<status status="PASS" endtime="20191123 10:48:51.194" starttime="20191123 10:48:50.673"></status>
 </kw>
 <kw name="Devo ver o meu nome &quot;Tiago&quot; na área logada" library="login_steps">
-<kw name="Page Should Contain" library="SeleniumLibrary">
-<doc>Verifies that current page contains ``text``.</doc>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
 <arguments>
+<arg>${SPAN_USER}</arg>
 <arg>${username}</arg>
 </arguments>
-<msg timestamp="20191103 16:44:15.997" level="INFO">Current page contains text 'Tiago'.</msg>
-<status status="PASS" endtime="20191103 16:44:15.997" starttime="20191103 16:44:15.969"></status>
+<status status="PASS" endtime="20191123 10:48:54.320" starttime="20191123 10:48:51.197"></status>
 </kw>
+<status status="PASS" endtime="20191123 10:48:54.321" starttime="20191123 10:48:51.197"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="login_steps">
 <kw name="Close Browser" library="SeleniumLibrary">
 <doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191103 16:44:18.306" starttime="20191103 16:44:15.998"></status>
+<status status="PASS" endtime="20191123 10:48:56.535" starttime="20191123 10:48:54.321"></status>
 </kw>
-<status status="PASS" endtime="20191103 16:44:18.307" starttime="20191103 16:44:15.968"></status>
+<status status="PASS" endtime="20191123 10:48:56.535" starttime="20191123 10:48:54.321"></status>
 </kw>
-<status status="PASS" endtime="20191103 16:44:18.307" critical="yes" starttime="20191103 16:43:57.018"></status>
+<status status="PASS" endtime="20191123 10:48:56.536" critical="yes" starttime="20191123 10:48:36.912"></status>
 </test>
 <doc>O usuário informa suas credenciais de acesso e submete o formulário de login</doc>
-<status status="PASS" endtime="20191103 16:44:18.341" starttime="20191103 16:43:55.304"></status>
+<status status="PASS" endtime="20191123 10:48:56.539" starttime="20191123 10:48:36.445"></status>
 </suite>
-<status status="PASS" endtime="20191103 16:44:18.344" starttime="20191103 16:43:55.275"></status>
+<suite source="c:\ninjaplus\specs\login_sem_sucesso.robot" id="s1-s2" name="Login Sem Sucesso">
+<test id="s1-s2-t1" name="Senha inválida">
+<kw type="setup" name="Abrir navegador" library="login_steps">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>http://ninjaplus-web:5000/login</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20191123 10:48:56.549" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191123 10:49:07.007" starttime="20191123 10:48:56.548"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:07.010" starttime="20191123 10:49:07.008"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191123 10:49:11.147" starttime="20191123 10:49:07.010"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:11.147" starttime="20191123 10:48:56.548"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login_steps">
+<arguments>
+<arg>papito@ninjaplus.com</arg>
+<arg>asdfgh</arg>
+<arg>Usuário e/ou senha inválidos</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:11.150" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191123 10:49:11.491" starttime="20191123 10:49:11.149"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:11.492" level="INFO">Typing text 'asdfgh' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191123 10:49:11.604" starttime="20191123 10:49:11.492"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:11.604" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191123 10:49:11.739" starttime="20191123 10:49:11.604"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:14.150" starttime="20191123 10:49:11.739"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:14.150" starttime="20191123 10:49:11.148"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="login_steps">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191123 10:49:16.392" starttime="20191123 10:49:14.152"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:16.392" starttime="20191123 10:49:14.151"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:16.393" critical="yes" starttime="20191123 10:48:56.547"></status>
+</test>
+<test id="s1-s2-t2" name="Usuario nao cadastrado">
+<kw type="setup" name="Abrir navegador" library="login_steps">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>http://ninjaplus-web:5000/login</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20191123 10:49:16.396" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191123 10:49:27.030" starttime="20191123 10:49:16.396"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:27.033" starttime="20191123 10:49:27.030"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191123 10:49:31.177" starttime="20191123 10:49:27.033"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:31.177" starttime="20191123 10:49:16.396"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login_steps">
+<arguments>
+<arg>404@yahoo.com</arg>
+<arg>123456</arg>
+<arg>Usuário e/ou senha inválidos</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:31.181" level="INFO">Typing text '404@yahoo.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191123 10:49:31.427" starttime="20191123 10:49:31.179"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:31.428" level="INFO">Typing text '123456' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191123 10:49:31.526" starttime="20191123 10:49:31.427"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:31.526" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191123 10:49:31.621" starttime="20191123 10:49:31.526"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:34.008" starttime="20191123 10:49:31.621"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:34.008" starttime="20191123 10:49:31.178"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="login_steps">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191123 10:49:36.227" starttime="20191123 10:49:34.009"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:36.227" starttime="20191123 10:49:34.009"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:36.228" critical="yes" starttime="20191123 10:49:16.396"></status>
+</test>
+<test id="s1-s2-t3" name="Email nao informado">
+<kw type="setup" name="Abrir navegador" library="login_steps">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>http://ninjaplus-web:5000/login</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20191123 10:49:36.232" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191123 10:49:47.584" starttime="20191123 10:49:36.232"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:47.588" starttime="20191123 10:49:47.584"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191123 10:49:51.723" starttime="20191123 10:49:47.588"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:51.724" starttime="20191123 10:49:36.232"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login_steps">
+<arguments>
+<arg>${EMPTY}</arg>
+<arg>abc123</arg>
+<arg>Opps. Cadê o email?</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:51.728" level="INFO">Typing text '' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191123 10:49:51.903" starttime="20191123 10:49:51.726"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:51.904" level="INFO">Typing text 'abc123' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191123 10:49:52.016" starttime="20191123 10:49:51.903"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191123 10:49:52.017" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191123 10:49:52.101" starttime="20191123 10:49:52.016"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:49:52.134" starttime="20191123 10:49:52.101"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:52.134" starttime="20191123 10:49:51.725"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="login_steps">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191123 10:49:54.425" starttime="20191123 10:49:52.135"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:54.425" starttime="20191123 10:49:52.134"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:49:54.426" critical="yes" starttime="20191123 10:49:36.230"></status>
+</test>
+<test id="s1-s2-t4" name="Senha nao informada">
+<kw type="setup" name="Abrir navegador" library="login_steps">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>http://ninjaplus-web:5000/login</arg>
+<arg>chrome</arg>
+</arguments>
+<msg timestamp="20191123 10:49:54.429" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191123 10:50:04.364" starttime="20191123 10:49:54.429"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:50:04.366" starttime="20191123 10:50:04.364"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191123 10:50:08.483" starttime="20191123 10:50:04.367"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:50:08.484" starttime="20191123 10:49:54.429"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login_steps">
+<arguments>
+<arg>papito@ninjaplus.com</arg>
+<arg>${EMPTY}</arg>
+<arg>Opps. Cadê a senha?</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191123 10:50:08.486" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191123 10:50:08.802" starttime="20191123 10:50:08.485"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191123 10:50:08.802" level="INFO">Typing text '' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191123 10:50:08.881" starttime="20191123 10:50:08.802"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191123 10:50:08.881" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191123 10:50:08.964" starttime="20191123 10:50:08.881"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191123 10:50:08.999" starttime="20191123 10:50:08.964"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:50:08.999" starttime="20191123 10:50:08.484"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="login_steps">
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191123 10:50:11.236" starttime="20191123 10:50:09.000"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:50:11.237" starttime="20191123 10:50:09.000"></status>
+</kw>
+<status status="PASS" endtime="20191123 10:50:11.237" critical="yes" starttime="20191123 10:49:54.428"></status>
+</test>
+<doc>O usuário informa suas credenciais incorretas e é notificado com uma mensagem de alerta</doc>
+<status status="PASS" endtime="20191123 10:50:11.241" starttime="20191123 10:48:56.542"></status>
+</suite>
+<status status="PASS" endtime="20191123 10:50:11.247" starttime="20191123 10:48:36.423"></status>
 </suite>
 <statistics>
 <total>
-<stat fail="0" pass="1">Critical Tests</stat>
-<stat fail="0" pass="1">All Tests</stat>
+<stat fail="0" pass="5">Critical Tests</stat>
+<stat fail="0" pass="5">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat fail="0" id="s1" name="Specs" pass="1">Specs</stat>
-<stat fail="0" id="s1-s1" name="Login" pass="1">Specs.Login</stat>
+<stat fail="0" id="s1" name="Specs" pass="5">Specs</stat>
+<stat fail="0" id="s1-s1" name="Login Com Sucesso" pass="1">Specs.Login Com Sucesso</stat>
+<stat fail="0" id="s1-s2" name="Login Sem Sucesso" pass="4">Specs.Login Sem Sucesso</stat>
 </suite>
 </statistics>
 <errors>

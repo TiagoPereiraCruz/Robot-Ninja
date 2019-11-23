@@ -10,4 +10,6 @@ Test Teardown   Fechar navegador
 
 *** Test Cases ***
 Senha inválida              papito@ninjaplus.com        asdfgh      Usuário e/ou senha inválidos
-Usuario nao cadastrado      ${EMPTY}                    123456      Usuário e/ou senha inválidos
+Usuario nao cadastrado      404@yahoo.com               123456      Usuário e/ou senha inválidos
+Email nao informado         ${EMPTY}                    abc123      Opps. Cadê o email?
+Senha nao informada         papito@ninjaplus.com        ${EMPTY}    Opps. Cadê a senha?
