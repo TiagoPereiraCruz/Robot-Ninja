@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   O usuário informa suas credenciais incorretas e é notificado com uma mensagem de alerta
-Resource        ../resources/login_steps.robot
+Resource        ../resources/steps/login.robot
 Test Template   Logando com credenciais inválidas devo ver uma mensagem de alerta
 
 # DDT (Data Driven Testing)

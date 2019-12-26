@@ -1,25 +1,7 @@
 *** Settings ***
-Library     SeleniumLibrary
-
-*** Variables ***
-${DEFAULT_URL}      http://ninjaplus-web:5000/login
-${BROWSER}          chrome
-${INPUT_EMAIL}      css:input[name=email]
-${INPUT_PASS}       css:input[name=password]
-${BUTTON_SUBMIT}    id:login
-${DIV_ALERT}        css:.alert
-${SPAN_USER}        css:.user .info span
+Resource    ./base.robot
 
 *** Keywords ***
-#### Setup e Teardown
-Abrir navegador
-    Open Browser    http://ninjaplus-web:5000/login     chrome
-    Set Selenium Implicit Wait  10
-    Maximize Browser Window
-
-Fechar navegador
-    Close Browser
-
 #### Steps
 Fazendo login com "${email}" e senha "${pass}"
     Input Text      ${INPUT_EMAIL}                    ${email}
