@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ./base.robot
+Library     ../../lib/db.py
 
 *** Variables ***
 # Data Test
@@ -18,6 +19,7 @@ Dado que estou logado com credenciais válidas
     Click Button    ${BUTTON_SUBMIT}
 
 Quando eu faço o cadastro de um novo filme
+    Remove Movie By Title               ${Title}
     Click Button                        ${BUTTON_ADD}
     Input Text                          ${INPUT_TITLE}      ${Title}
     Click Element                       ${DROP_STATUS}

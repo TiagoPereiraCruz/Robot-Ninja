@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   Formulário de cadastro de filmes
-Resource  ../resources/steps/cadastro.robot
+Resource  ../../resources/web/steps/cadastro.robot
 
 Test Setup      Abrir navegador
 Test Teardown   Fechar navegador

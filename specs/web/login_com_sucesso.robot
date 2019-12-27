@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  O usuário informa suas credenciais de acesso e submete o formulário de login
-Resource  ../resources/steps/login.robot
+Resource  ../../resources/web/steps/login.robot
 
 Test Setup      Abrir navegador
 Test Teardown   Fechar navegador

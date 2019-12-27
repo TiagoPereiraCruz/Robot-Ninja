@@ -1,709 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot rpa="false" generated="20191225 21:22:12.806" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
-<suite source="c:\Robot-Ninja\specs" id="s1" name="Specs">
-<suite source="c:\Robot-Ninja\specs\cadastro.robot" id="s1-s1" name="Cadastro">
-<test id="s1-s1-t1" name="Novo filme">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
+<robot rpa="false" generated="20191226 22:50:27.296" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
+<suite source="c:\Robot-Ninja\specs\api\post_user.robot" id="s1" name="Post User">
+<test id="s1-t1" name="Create a new user">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
 <arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
+<arg>nplus</arg>
+<arg>http://ninjaplus-api:3000</arg>
 </arguments>
-<msg timestamp="20191225 21:22:13.043" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:22:20.069" starttime="20191225 21:22:13.042"></status>
+<msg timestamp="20191226 22:50:27.488" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191226 22:50:27.488" starttime="20191226 22:50:27.487"></status>
 </kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>10</arg>
+<arg>full_name=Bruce Wayne</arg>
+<arg>email=bruce@wayne.com</arg>
+<arg>password=pwd123</arg>
 </arguments>
-<status status="PASS" endtime="20191225 21:22:20.072" starttime="20191225 21:22:20.069"></status>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191226 22:50:27.489" level="INFO">&amp;{body} = { full_name=Bruce Wayne | email=bruce@wayne.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191226 22:50:27.489" starttime="20191226 22:50:27.489"></status>
 </kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:22:24.209" starttime="20191225 21:22:20.072"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:24.210" starttime="20191225 21:22:13.042"></status>
-</kw>
-<kw name="Dado que estou logado com credenciais válidas" library="cadastro">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>tiago@ninjaplus.com</arg>
+<arg>Content-Type=application/json</arg>
 </arguments>
-<msg timestamp="20191225 21:22:24.214" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:22:24.664" starttime="20191225 21:22:24.213"></status>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191226 22:50:27.489" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191226 22:50:27.490" starttime="20191226 22:50:27.489"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
 <arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>pwd123</arg>
+<arg>nplus</arg>
+<arg>/user</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
 </arguments>
-<msg timestamp="20191225 21:22:24.666" level="INFO">Typing text 'pwd123' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:22:24.891" starttime="20191225 21:22:24.665"></status>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191226 22:50:27.491" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"full_name": "Bruce Wayne", "email": "bruce@wayne.com", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191226 22:50:29.848" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191226 22:50:29.848" starttime="20191226 22:50:27.490"></status>
 </kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
 <arguments>
-<arg>${BUTTON_SUBMIT}</arg>
+<arg>${response.status_code}</arg>
 </arguments>
-<msg timestamp="20191225 21:22:24.892" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:22:25.088" starttime="20191225 21:22:24.892"></status>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191226 22:50:29.850" level="INFO">${code} = 200</msg>
+<status status="PASS" endtime="20191226 22:50:29.850" starttime="20191226 22:50:29.849"></status>
 </kw>
-<status status="PASS" endtime="20191225 21:22:25.088" starttime="20191225 21:22:24.211"></status>
-</kw>
-<kw name="Quando eu faço o cadastro de um novo filme" library="cadastro">
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
 <arguments>
-<arg>${BUTTON_ADD}</arg>
+<arg>${code}</arg>
+<arg>200</arg>
 </arguments>
-<msg timestamp="20191225 21:22:25.103" level="INFO">Clicking button 'css:.movie-add'.</msg>
-<status status="PASS" endtime="20191225 21:22:25.894" starttime="20191225 21:22:25.103"></status>
+<status status="PASS" endtime="20191226 22:50:29.851" starttime="20191226 22:50:29.851"></status>
 </kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_TITLE}</arg>
-<arg>${Title}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:25.895" level="INFO">Typing text 'Resident Evil' into text field 'css:input[name=title]'.</msg>
-<status status="PASS" endtime="20191225 21:22:26.708" starttime="20191225 21:22:25.894"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>${DROP_STATUS}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:26.710" level="INFO">Clicking element 'css:input[placeholder=Status]'.</msg>
-<status status="PASS" endtime="20191225 21:22:26.892" starttime="20191225 21:22:26.709"></status>
-</kw>
-<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` is visible.</doc>
-<arguments>
-<arg>${OPTION_AVAILABLE}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:22:26.964" starttime="20191225 21:22:26.892"></status>
-</kw>
-<kw name="Click Element" library="SeleniumLibrary">
-<doc>Click the element identified by ``locator``.</doc>
-<arguments>
-<arg>${OPTION_AVAILABLE}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:26.965" level="INFO">Clicking element 'xpath://li//span[contains(text(),"Disponível")]'.</msg>
-<status status="PASS" endtime="20191225 21:22:27.590" starttime="20191225 21:22:26.964"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_YEAR}</arg>
-<arg>${Year}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:27.592" level="INFO">Typing text '2002' into text field 'css:input[name=year]'.</msg>
-<status status="PASS" endtime="20191225 21:22:27.882" starttime="20191225 21:22:27.591"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_RDATE}</arg>
-<arg>${ReleaseDate}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:27.884" level="INFO">Typing text '01/12/2002' into text field 'css:input[name=release_date]'.</msg>
-<status status="PASS" endtime="20191225 21:22:28.274" starttime="20191225 21:22:27.882"></status>
-</kw>
-<kw type="for" name="${item} IN [ @{Cast} ]">
-<kw type="foritem" name="${item} = Milla Jovovich">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:28.276" level="INFO">Typing text 'Milla Jovovich' into text field 'css:.cast'.</msg>
-<status status="PASS" endtime="20191225 21:22:28.682" starttime="20191225 21:22:28.275"></status>
-</kw>
-<kw name="Press Keys" library="SeleniumLibrary">
-<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>TAB</arg>
-</arguments>
-<msg timestamp="20191225 21:22:28.685" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
-<msg timestamp="20191225 21:22:28.699" level="INFO">Pressing special key TAB to element.</msg>
-<status status="PASS" endtime="20191225 21:22:29.275" starttime="20191225 21:22:28.683"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:29.276" level="INFO">Milla Jovovich</msg>
-<status status="PASS" endtime="20191225 21:22:29.277" starttime="20191225 21:22:29.276"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:29.277" starttime="20191225 21:22:28.275"></status>
-</kw>
-<kw type="foritem" name="${item} = Ali Larter">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:29.279" level="INFO">Typing text 'Ali Larter' into text field 'css:.cast'.</msg>
-<status status="PASS" endtime="20191225 21:22:29.577" starttime="20191225 21:22:29.278"></status>
-</kw>
-<kw name="Press Keys" library="SeleniumLibrary">
-<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>TAB</arg>
-</arguments>
-<msg timestamp="20191225 21:22:29.579" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
-<msg timestamp="20191225 21:22:29.603" level="INFO">Pressing special key TAB to element.</msg>
-<status status="PASS" endtime="20191225 21:22:30.159" starttime="20191225 21:22:29.577"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:30.160" level="INFO">Ali Larter</msg>
-<status status="PASS" endtime="20191225 21:22:30.160" starttime="20191225 21:22:30.159"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:30.160" starttime="20191225 21:22:29.277"></status>
-</kw>
-<kw type="foritem" name="${item} = Ian Glen">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:30.160" level="INFO">Typing text 'Ian Glen' into text field 'css:.cast'.</msg>
-<status status="PASS" endtime="20191225 21:22:30.393" starttime="20191225 21:22:30.160"></status>
-</kw>
-<kw name="Press Keys" library="SeleniumLibrary">
-<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>TAB</arg>
-</arguments>
-<msg timestamp="20191225 21:22:30.395" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
-<msg timestamp="20191225 21:22:30.410" level="INFO">Pressing special key TAB to element.</msg>
-<status status="PASS" endtime="20191225 21:22:30.954" starttime="20191225 21:22:30.393"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:30.956" level="INFO">Ian Glen</msg>
-<status status="PASS" endtime="20191225 21:22:30.956" starttime="20191225 21:22:30.955"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:30.956" starttime="20191225 21:22:30.160"></status>
-</kw>
-<kw type="foritem" name="${item} = Shawn Roberts">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:30.957" level="INFO">Typing text 'Shawn Roberts' into text field 'css:.cast'.</msg>
-<status status="PASS" endtime="20191225 21:22:31.231" starttime="20191225 21:22:30.957"></status>
-</kw>
-<kw name="Press Keys" library="SeleniumLibrary">
-<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
-<arguments>
-<arg>${INPUT_CAST}</arg>
-<arg>TAB</arg>
-</arguments>
-<msg timestamp="20191225 21:22:31.233" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
-<msg timestamp="20191225 21:22:31.250" level="INFO">Pressing special key TAB to element.</msg>
-<status status="PASS" endtime="20191225 21:22:31.789" starttime="20191225 21:22:31.232"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
-<arguments>
-<arg>${item}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:31.791" level="INFO">Shawn Roberts</msg>
-<status status="PASS" endtime="20191225 21:22:31.791" starttime="20191225 21:22:31.790"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:31.791" starttime="20191225 21:22:30.957"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:31.791" starttime="20191225 21:22:28.275"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${TEXT_PLOT}</arg>
-<arg>${Plot}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:31.792" level="INFO">Typing text 'Alice tem a missão de desativar a rainha vermelha na colmeia porque alguém jogou um vírus e deu ruim' into text field 'css:textarea[name=overview]'.</msg>
-<status status="PASS" endtime="20191225 21:22:33.030" starttime="20191225 21:22:31.792"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SAVE}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:33.031" level="INFO">Clicking button 'id:create-movie'.</msg>
-<status status="PASS" endtime="20191225 21:22:33.185" starttime="20191225 21:22:33.030"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:33.185" starttime="20191225 21:22:25.102"></status>
-</kw>
-<kw name="Então este filme deve ser exibido na lista" library="cadastro">
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${TABLE_ITEM}</arg>
-<arg>${Title}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:22:34.063" starttime="20191225 21:22:33.188"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:34.063" starttime="20191225 21:22:33.187"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:22:34.488" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-7.png"&gt;&lt;img src="selenium-screenshot-7.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:22:34.488" starttime="20191225 21:22:34.065"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:22:36.728" starttime="20191225 21:22:34.488"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:36.728" starttime="20191225 21:22:34.065"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:36.729" critical="yes" starttime="20191225 21:22:13.041"></status>
+<status status="PASS" endtime="20191226 22:50:29.852" critical="yes" starttime="20191226 22:50:27.485"></status>
 </test>
-<doc>Formulário de cadastro de filmes</doc>
-<status status="PASS" endtime="20191225 21:22:36.733" starttime="20191225 21:22:12.830"></status>
-</suite>
-<suite source="c:\Robot-Ninja\specs\login_com_sucesso.robot" id="s1-s2" name="Login Com Sucesso">
-<test id="s1-s2-t1" name="Login com sucesso">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:36.747" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:22:43.589" starttime="20191225 21:22:36.746"></status>
-</kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<arguments>
-<arg>10</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:22:43.591" starttime="20191225 21:22:43.589"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:22:47.719" starttime="20191225 21:22:43.591"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:47.719" starttime="20191225 21:22:36.746"></status>
-</kw>
-<kw name="Fazendo Login com &quot;tiago@ninjaplus.com&quot; e senha &quot;pwd123&quot;" library="login">
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>${email}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:47.721" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:22:47.884" starttime="20191225 21:22:47.721"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>${pass}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:47.884" level="INFO">Typing text 'pwd123' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:22:47.973" starttime="20191225 21:22:47.884"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SUBMIT}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:47.973" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:22:48.061" starttime="20191225 21:22:47.973"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:48.061" starttime="20191225 21:22:47.720"></status>
-</kw>
-<kw name="Devo ver o meu nome &quot;Tiago&quot; na área logada" library="login">
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${SPAN_USER}</arg>
-<arg>${username}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:22:48.684" starttime="20191225 21:22:48.062"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:48.684" starttime="20191225 21:22:48.062"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:22:49.117" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-8.png"&gt;&lt;img src="selenium-screenshot-8.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:22:49.117" starttime="20191225 21:22:48.685"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:22:52.008" starttime="20191225 21:22:49.118"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:52.008" starttime="20191225 21:22:48.685"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:22:52.010" critical="yes" starttime="20191225 21:22:36.745"></status>
-</test>
-<doc>O usuário informa suas credenciais de acesso e submete o formulário de login</doc>
-<status status="PASS" endtime="20191225 21:22:52.016" starttime="20191225 21:22:36.737"></status>
-</suite>
-<suite source="c:\Robot-Ninja\specs\login_sem_sucesso.robot" id="s1-s3" name="Login Sem Sucesso">
-<test id="s1-s3-t1" name="Senha inválida">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20191225 21:22:52.041" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:23:00.952" starttime="20191225 21:22:52.041"></status>
-</kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<arguments>
-<arg>10</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:00.957" starttime="20191225 21:23:00.953"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:23:05.095" starttime="20191225 21:23:00.958"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:05.096" starttime="20191225 21:22:52.040"></status>
-</kw>
-<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
-<arguments>
-<arg>papito@ninjaplus.com</arg>
-<arg>asdfgh</arg>
-<arg>Usuário e/ou senha inválidos</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>${email}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:05.099" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:23:05.462" starttime="20191225 21:23:05.098"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>${pass}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:05.465" level="INFO">Typing text 'asdfgh' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:23:05.733" starttime="20191225 21:23:05.463"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SUBMIT}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:05.735" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:23:05.961" starttime="20191225 21:23:05.734"></status>
-</kw>
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${DIV_ALERT}</arg>
-<arg>${expect_message}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:06.273" starttime="20191225 21:23:05.962"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:06.273" starttime="20191225 21:23:05.097"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:23:07.595" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-9.png"&gt;&lt;img src="selenium-screenshot-9.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:23:07.595" starttime="20191225 21:23:06.275"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:23:09.819" starttime="20191225 21:23:07.596"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:09.819" starttime="20191225 21:23:06.274"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:09.820" critical="yes" starttime="20191225 21:22:52.037"></status>
-</test>
-<test id="s1-s3-t2" name="Usuario nao cadastrado">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:09.824" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:23:19.077" starttime="20191225 21:23:09.823"></status>
-</kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<arguments>
-<arg>10</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:19.080" starttime="20191225 21:23:19.077"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:23:23.204" starttime="20191225 21:23:19.081"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:23.204" starttime="20191225 21:23:09.823"></status>
-</kw>
-<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
-<arguments>
-<arg>404@yahoo.com</arg>
-<arg>123456</arg>
-<arg>Usuário e/ou senha inválidos</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>${email}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:23.206" level="INFO">Typing text '404@yahoo.com' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:23:23.330" starttime="20191225 21:23:23.206"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>${pass}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:23.331" level="INFO">Typing text '123456' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:23:23.428" starttime="20191225 21:23:23.330"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SUBMIT}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:23.429" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:23:23.531" starttime="20191225 21:23:23.429"></status>
-</kw>
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${DIV_ALERT}</arg>
-<arg>${expect_message}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:23.787" starttime="20191225 21:23:23.532"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:23.787" starttime="20191225 21:23:23.205"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:23:24.523" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-10.png"&gt;&lt;img src="selenium-screenshot-10.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:23:24.524" starttime="20191225 21:23:23.789"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:23:26.637" starttime="20191225 21:23:24.524"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:26.637" starttime="20191225 21:23:23.788"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:26.638" critical="yes" starttime="20191225 21:23:09.822"></status>
-</test>
-<test id="s1-s3-t3" name="Email nao informado">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:26.641" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:23:35.237" starttime="20191225 21:23:26.641"></status>
-</kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<arguments>
-<arg>10</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:35.240" starttime="20191225 21:23:35.237"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:23:39.382" starttime="20191225 21:23:35.241"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:39.382" starttime="20191225 21:23:26.641"></status>
-</kw>
-<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
-<arguments>
-<arg>${EMPTY}</arg>
-<arg>abc123</arg>
-<arg>Opps. Cadê o email?</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>${email}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:39.386" level="INFO">Typing text '' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:23:39.532" starttime="20191225 21:23:39.385"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>${pass}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:39.534" level="INFO">Typing text 'abc123' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:23:39.723" starttime="20191225 21:23:39.533"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SUBMIT}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:39.724" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:23:39.878" starttime="20191225 21:23:39.723"></status>
-</kw>
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${DIV_ALERT}</arg>
-<arg>${expect_message}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:39.936" starttime="20191225 21:23:39.878"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:39.936" starttime="20191225 21:23:39.384"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:23:41.275" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-11.png"&gt;&lt;img src="selenium-screenshot-11.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:23:41.276" starttime="20191225 21:23:39.938"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:23:43.485" starttime="20191225 21:23:41.276"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:43.485" starttime="20191225 21:23:39.937"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:43.487" critical="yes" starttime="20191225 21:23:26.640"></status>
-</test>
-<test id="s1-s3-t4" name="Senha nao informada">
-<kw type="setup" name="Abrir navegador" library="base">
-<kw name="Open Browser" library="SeleniumLibrary">
-<doc>Opens a new browser instance to the optional ``url``.</doc>
-<arguments>
-<arg>${DEFAULT_URL}</arg>
-<arg>${BROWSER}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:43.491" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
-<status status="PASS" endtime="20191225 21:23:50.850" starttime="20191225 21:23:43.491"></status>
-</kw>
-<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
-<doc>Sets the implicit wait value used by Selenium.</doc>
-<arguments>
-<arg>10</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:50.855" starttime="20191225 21:23:50.851"></status>
-</kw>
-<kw name="Maximize Browser Window" library="SeleniumLibrary">
-<doc>Maximizes current browser window.</doc>
-<status status="PASS" endtime="20191225 21:23:54.986" starttime="20191225 21:23:50.855"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:54.987" starttime="20191225 21:23:43.491"></status>
-</kw>
-<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
-<arguments>
-<arg>papito@ninjaplus.com</arg>
-<arg>${EMPTY}</arg>
-<arg>Opps. Cadê a senha?</arg>
-</arguments>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_EMAIL}</arg>
-<arg>${email}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:54.990" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
-<status status="PASS" endtime="20191225 21:23:55.326" starttime="20191225 21:23:54.989"></status>
-</kw>
-<kw name="Input Text" library="SeleniumLibrary">
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<arguments>
-<arg>${INPUT_PASS}</arg>
-<arg>${pass}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:55.327" level="INFO">Typing text '' into text field 'css:input[name=password]'.</msg>
-<status status="PASS" endtime="20191225 21:23:55.472" starttime="20191225 21:23:55.326"></status>
-</kw>
-<kw name="Click Button" library="SeleniumLibrary">
-<doc>Clicks the button identified by ``locator``.</doc>
-<arguments>
-<arg>${BUTTON_SUBMIT}</arg>
-</arguments>
-<msg timestamp="20191225 21:23:55.473" level="INFO">Clicking button 'id:login'.</msg>
-<status status="PASS" endtime="20191225 21:23:55.626" starttime="20191225 21:23:55.473"></status>
-</kw>
-<kw name="Wait Until Element Contains" library="SeleniumLibrary">
-<doc>Waits until the element ``locator`` contains ``text``.</doc>
-<arguments>
-<arg>${DIV_ALERT}</arg>
-<arg>${expect_message}</arg>
-</arguments>
-<status status="PASS" endtime="20191225 21:23:55.690" starttime="20191225 21:23:55.627"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:55.690" starttime="20191225 21:23:54.988"></status>
-</kw>
-<kw type="teardown" name="Fechar navegador" library="base">
-<kw name="Capture Page Screenshot" library="SeleniumLibrary">
-<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
-<msg timestamp="20191225 21:23:57.017" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-12.png"&gt;&lt;img src="selenium-screenshot-12.png" width="800px"&gt;&lt;/a&gt;</msg>
-<status status="PASS" endtime="20191225 21:23:57.017" starttime="20191225 21:23:55.701"></status>
-</kw>
-<kw name="Close Browser" library="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="PASS" endtime="20191225 21:23:59.232" starttime="20191225 21:23:57.017"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:59.233" starttime="20191225 21:23:55.700"></status>
-</kw>
-<status status="PASS" endtime="20191225 21:23:59.234" critical="yes" starttime="20191225 21:23:43.490"></status>
-</test>
-<doc>O usuário informa suas credenciais incorretas e é notificado com uma mensagem de alerta</doc>
-<status status="PASS" endtime="20191225 21:23:59.240" starttime="20191225 21:22:52.024"></status>
-</suite>
-<status status="PASS" endtime="20191225 21:23:59.254" starttime="20191225 21:22:12.808"></status>
+<status status="PASS" endtime="20191226 22:50:29.855" starttime="20191226 22:50:27.298"></status>
 </suite>
 <statistics>
 <total>
-<stat fail="0" pass="6">Critical Tests</stat>
-<stat fail="0" pass="6">All Tests</stat>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat fail="0" id="s1" name="Specs" pass="6">Specs</stat>
-<stat fail="0" id="s1-s1" name="Cadastro" pass="1">Specs.Cadastro</stat>
-<stat fail="0" id="s1-s2" name="Login Com Sucesso" pass="1">Specs.Login Com Sucesso</stat>
-<stat fail="0" id="s1-s3" name="Login Sem Sucesso" pass="4">Specs.Login Sem Sucesso</stat>
+<stat fail="0" id="s1" name="Post User" pass="1">Post User</stat>
 </suite>
 </statistics>
 <errors>
