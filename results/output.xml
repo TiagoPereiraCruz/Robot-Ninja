@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot rpa="false" generated="20191226 22:50:27.296" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
-<suite source="c:\Robot-Ninja\specs\api\post_user.robot" id="s1" name="Post User">
-<test id="s1-t1" name="Create a new user">
-<kw name="Create Session" library="RequestsLibrary">
-<doc>Create Session: create a HTTP session to a server</doc>
+<robot rpa="false" generated="20191228 21:13:36.357" generator="Robot 3.1.2 (Python 2.7.17 on win32)">
+<suite source="c:\Robot-Ninja\specs" id="s1" name="Specs">
+<suite source="c:\Robot-Ninja\specs\api" id="s1-s1" name="Api">
+<suite source="c:\Robot-Ninja\specs\api\delete_user.robot" id="s1-s1-s1" name="Delete User">
+<test id="s1-s1-s1-t1" name="Test: Unique Id">
+<kw name="Remove User By Email" library="db">
 <arguments>
-<arg>nplus</arg>
-<arg>http://ninjaplus-api:3000</arg>
+<arg>darth@vader.com</arg>
 </arguments>
-<msg timestamp="20191226 22:50:27.488" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" endtime="20191226 22:50:27.488" starttime="20191226 22:50:27.487"></status>
+<status status="PASS" endtime="20191228 21:13:38.991" starttime="20191228 21:13:38.986"></status>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>full_name=Bruce Wayne</arg>
-<arg>email=bruce@wayne.com</arg>
-<arg>password=pwd123</arg>
+<arg>full_name=Darth Vader</arg>
+<arg>email=darth@vader.com</arg>
+<arg>password=${Password}</arg>
 </arguments>
 <assign>
-<var>&amp;{body}</var>
+<var>&amp;{user}</var>
 </assign>
-<msg timestamp="20191226 22:50:27.489" level="INFO">&amp;{body} = { full_name=Bruce Wayne | email=bruce@wayne.com | password=pwd123 }</msg>
-<status status="PASS" endtime="20191226 22:50:27.489" starttime="20191226 22:50:27.489"></status>
+<msg timestamp="20191228 21:13:38.993" level="INFO">&amp;{user} = { full_name=Darth Vader | email=darth@vader.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:13:38.993" starttime="20191228 21:13:38.992"></status>
+</kw>
+<kw name="Post user Return Id" library="base_api">
+<arguments>
+<arg>${user}</arg>
+</arguments>
+<assign>
+<var>${user_id}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:38.994" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:38.995" starttime="20191228 21:13:38.994"></status>
 </kw>
 <kw name="Create Dictionary" library="BuiltIn">
 <doc>Creates and returns a dictionary based on the given ``items``.</doc>
@@ -32,8 +47,8 @@
 <assign>
 <var>&amp;{headers}</var>
 </assign>
-<msg timestamp="20191226 22:50:27.489" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
-<status status="PASS" endtime="20191226 22:50:27.490" starttime="20191226 22:50:27.489"></status>
+<msg timestamp="20191228 21:13:38.995" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:38.995" starttime="20191228 21:13:38.995"></status>
 </kw>
 <kw name="Post Request" library="RequestsLibrary">
 <doc>Send a POST request on the session object found using the
@@ -47,12 +62,179 @@ given `alias`</doc>
 <assign>
 <var>${response}</var>
 </assign>
-<msg timestamp="20191226 22:50:27.491" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+<msg timestamp="20191228 21:13:38.996" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
 headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
-data={"full_name": "Bruce Wayne", "email": "bruce@wayne.com", "password": "pwd123"} 
+data={"full_name": "Darth Vader", "email": "darth@vader.com", "password": "pwd123"} 
 json=None</msg>
-<msg timestamp="20191226 22:50:29.848" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" endtime="20191226 22:50:29.848" starttime="20191226 22:50:27.490"></status>
+<msg timestamp="20191228 21:13:41.341" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:41.341" starttime="20191228 21:13:38.995"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:41.342" level="INFO">{
+    "id": 7,
+    "full_name": "Darth Vader",
+    "email": "darth@vader.com",
+    "password": "$2b$10$HP5D.UBBUO76KCWOdqDdQ.XPsO/3CogyHyanY6IofmNz2GqmI74wG",
+    "updatedAt": "2019-12-29T00:13:41.761Z",
+    "createdAt": "2019-12-29T00:13:41.761Z"
+}</msg>
+<status status="PASS" endtime="20191228 21:13:41.342" starttime="20191228 21:13:41.341"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.json()['id']}</arg>
+</arguments>
+<assign>
+<var>${USER_ID}</var>
+</assign>
+<msg timestamp="20191228 21:13:41.343" level="INFO">${USER_ID} = 7</msg>
+<status status="PASS" endtime="20191228 21:13:41.343" starttime="20191228 21:13:41.342"></status>
+</kw>
+<msg timestamp="20191228 21:13:41.343" level="INFO">${user_id} = 7</msg>
+<status status="PASS" endtime="20191228 21:13:41.343" starttime="20191228 21:13:38.994"></status>
+</kw>
+<kw name="Delete User" library="base_api">
+<arguments>
+<arg>${user_id}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Get Token" library="base_api">
+<assign>
+<var>${token}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:41.344" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:41.345" starttime="20191228 21:13:41.344"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:13:41.345" level="INFO">&amp;{body} = { email=tiago@ninjaplus.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:13:41.345" starttime="20191228 21:13:41.345"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:41.346" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:41.346" starttime="20191228 21:13:41.345"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/auth</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:41.346" level="INFO">POST Request using : uri=/auth, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"email": "tiago@ninjaplus.com", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:13:43.691" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:43.691" starttime="20191228 21:13:41.346"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:43.692" level="INFO">{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0NC4xOTIrMDA6MDAifQ.oqqmarswoaOnarGSgmBPLOn7rA3ek2NADZpqzs8ntB4",
+    "expire": "2019-12-29T00:18:44.192+00:00",
+    "userId": 1
+}</msg>
+<status status="PASS" endtime="20191228 21:13:43.692" starttime="20191228 21:13:43.692"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>JWT ${response.json()['token']}</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<msg timestamp="20191228 21:13:43.693" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0NC4xOTIrMDA6MDAifQ.oqqmarswoaOnarGSgmBPLOn7rA3ek2NADZpqzs8ntB4</msg>
+<status status="PASS" endtime="20191228 21:13:43.693" starttime="20191228 21:13:43.692"></status>
+</kw>
+<msg timestamp="20191228 21:13:43.693" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0NC4xOTIrMDA6MDAifQ.oqqmarswoaOnarGSgmBPLOn7rA3ek2NADZpqzs8ntB4</msg>
+<status status="PASS" endtime="20191228 21:13:43.693" starttime="20191228 21:13:41.344"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:43.693" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:43.694" starttime="20191228 21:13:43.693"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:43.694" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0NC4xOTIrMDA6MDAifQ.oqqmarswoaOnarGSgmBPLOn7rA3ek2NADZpqzs8ntB4 ...</msg>
+<status status="PASS" endtime="20191228 21:13:43.694" starttime="20191228 21:13:43.694"></status>
+</kw>
+<kw name="Delete Request" library="RequestsLibrary">
+<doc>Send a DELETE request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:43.695" level="INFO">DELETE Request using : uri=/user/7, params=None, timeout=None, allow_redirects=True
+headers={'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0', 'Connection': 'keep-alive', u'Content-Type': u'application/json', u'Authorization': u'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0NC4xOTIrMDA6MDAifQ.oqqmarswoaOnarGSgmBPLOn7rA3ek2NADZpqzs8ntB4'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191228 21:13:45.959" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:45.959" starttime="20191228 21:13:43.694"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:45.959" level="INFO"></msg>
+<status status="PASS" endtime="20191228 21:13:45.959" starttime="20191228 21:13:45.959"></status>
+</kw>
+<msg timestamp="20191228 21:13:45.959" level="INFO">${response} = &lt;Response [204]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:45.960" starttime="20191228 21:13:41.343"></status>
 </kw>
 <kw name="Convert To String" library="BuiltIn">
 <doc>Converts the given item to a Unicode string.</doc>
@@ -62,8 +244,338 @@ json=None</msg>
 <assign>
 <var>${code}</var>
 </assign>
-<msg timestamp="20191226 22:50:29.850" level="INFO">${code} = 200</msg>
-<status status="PASS" endtime="20191226 22:50:29.850" starttime="20191226 22:50:29.849"></status>
+<msg timestamp="20191228 21:13:45.961" level="INFO">${code} = 204</msg>
+<status status="PASS" endtime="20191228 21:13:45.961" starttime="20191228 21:13:45.961"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>204</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:45.962" starttime="20191228 21:13:45.962"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:13:45.962" critical="yes" starttime="20191228 21:13:38.985"></status>
+</test>
+<test id="s1-s1-s1-t2" name="Test: User not found">
+<kw name="Delete User" library="base_api">
+<arguments>
+<arg>9999</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Get Token" library="base_api">
+<assign>
+<var>${token}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:45.967" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:45.967" starttime="20191228 21:13:45.967"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:13:45.968" level="INFO">&amp;{body} = { email=tiago@ninjaplus.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:13:45.968" starttime="20191228 21:13:45.968"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:45.969" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:45.969" starttime="20191228 21:13:45.968"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/auth</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:45.970" level="INFO">POST Request using : uri=/auth, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"email": "tiago@ninjaplus.com", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:13:48.293" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:48.293" starttime="20191228 21:13:45.969"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:48.294" level="INFO">{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0OC43OTIrMDA6MDAifQ.bUzALDreENWz80cLORcCYrEBATn2mC0Y5I0fboAbpvs",
+    "expire": "2019-12-29T00:18:48.792+00:00",
+    "userId": 1
+}</msg>
+<status status="PASS" endtime="20191228 21:13:48.294" starttime="20191228 21:13:48.294"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>JWT ${response.json()['token']}</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<msg timestamp="20191228 21:13:48.294" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0OC43OTIrMDA6MDAifQ.bUzALDreENWz80cLORcCYrEBATn2mC0Y5I0fboAbpvs</msg>
+<status status="PASS" endtime="20191228 21:13:48.295" starttime="20191228 21:13:48.294"></status>
+</kw>
+<msg timestamp="20191228 21:13:48.295" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0OC43OTIrMDA6MDAifQ.bUzALDreENWz80cLORcCYrEBATn2mC0Y5I0fboAbpvs</msg>
+<status status="PASS" endtime="20191228 21:13:48.295" starttime="20191228 21:13:45.966"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:48.295" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:48.295" starttime="20191228 21:13:48.295"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:48.296" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0OC43OTIrMDA6MDAifQ.bUzALDreENWz80cLORcCYrEBATn2mC0Y5I0fboAbpvs ...</msg>
+<status status="PASS" endtime="20191228 21:13:48.296" starttime="20191228 21:13:48.296"></status>
+</kw>
+<kw name="Delete Request" library="RequestsLibrary">
+<doc>Send a DELETE request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:48.297" level="INFO">DELETE Request using : uri=/user/9999, params=None, timeout=None, allow_redirects=True
+headers={'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0', 'Connection': 'keep-alive', u'Content-Type': u'application/json', u'Authorization': u'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo0OC43OTIrMDA6MDAifQ.bUzALDreENWz80cLORcCYrEBATn2mC0Y5I0fboAbpvs'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191228 21:13:50.565" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:50.565" starttime="20191228 21:13:48.296"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:50.566" level="INFO">Not Found</msg>
+<status status="PASS" endtime="20191228 21:13:50.566" starttime="20191228 21:13:50.565"></status>
+</kw>
+<msg timestamp="20191228 21:13:50.566" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:50.566" starttime="20191228 21:13:45.965"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:13:50.568" level="INFO">${code} = 404</msg>
+<status status="PASS" endtime="20191228 21:13:50.568" starttime="20191228 21:13:50.567"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>404</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:50.569" starttime="20191228 21:13:50.569"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:13:50.570" critical="yes" starttime="20191228 21:13:45.965"></status>
+</test>
+<status status="PASS" endtime="20191228 21:13:50.571" starttime="20191228 21:13:36.385"></status>
+</suite>
+<suite source="c:\Robot-Ninja\specs\api\get_user.robot" id="s1-s1-s2" name="Get User">
+<test id="s1-s1-s2-t1" name="Test: Unique Id">
+<kw name="Get User" library="base_api">
+<arguments>
+<arg>${USER_ID}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Get Token" library="base_api">
+<assign>
+<var>${token}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:50.581" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:50.581" starttime="20191228 21:13:50.581"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:13:50.582" level="INFO">&amp;{body} = { email=tiago@ninjaplus.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:13:50.582" starttime="20191228 21:13:50.581"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:50.583" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:50.583" starttime="20191228 21:13:50.582"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/auth</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:50.583" level="INFO">POST Request using : uri=/auth, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"email": "tiago@ninjaplus.com", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:13:52.910" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:52.910" starttime="20191228 21:13:50.583"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:52.910" level="INFO">{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1My40MTArMDA6MDAifQ.bCJNEEB0YypQOIykCWWk76N1UC4dCw61EjG43Fkfwns",
+    "expire": "2019-12-29T00:18:53.410+00:00",
+    "userId": 1
+}</msg>
+<status status="PASS" endtime="20191228 21:13:52.910" starttime="20191228 21:13:52.910"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>JWT ${response.json()['token']}</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<msg timestamp="20191228 21:13:52.911" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1My40MTArMDA6MDAifQ.bCJNEEB0YypQOIykCWWk76N1UC4dCw61EjG43Fkfwns</msg>
+<status status="PASS" endtime="20191228 21:13:52.911" starttime="20191228 21:13:52.911"></status>
+</kw>
+<msg timestamp="20191228 21:13:52.911" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1My40MTArMDA6MDAifQ.bCJNEEB0YypQOIykCWWk76N1UC4dCw61EjG43Fkfwns</msg>
+<status status="PASS" endtime="20191228 21:13:52.911" starttime="20191228 21:13:50.581"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:52.912" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:52.912" starttime="20191228 21:13:52.911"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:52.913" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1My40MTArMDA6MDAifQ.bCJNEEB0YypQOIykCWWk76N1UC4dCw61EjG43Fkfwns ...</msg>
+<status status="PASS" endtime="20191228 21:13:52.913" starttime="20191228 21:13:52.912"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:52.913" level="INFO">GET Request using : uri=/user/1, params=None, timeout=None, allow_redirects=True
+headers={'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0', 'Connection': 'keep-alive', u'Content-Type': u'application/json', u'Authorization': u'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1My40MTArMDA6MDAifQ.bCJNEEB0YypQOIykCWWk76N1UC4dCw61EjG43Fkfwns'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191228 21:13:55.180" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:55.180" starttime="20191228 21:13:52.913"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:55.181" level="INFO">{
+    "id": 1,
+    "full_name": "Tiago",
+    "password": "$2b$10$w5RVRkJPbE9hwkDPqWXyfeQxHQny0Nki0ACFByWL3LbpmBKB6Jnhy",
+    "email": "tiago@ninjaplus.com",
+    "createdAt": "2019-12-28T23:38:14.860Z",
+    "updatedAt": "2019-12-28T23:38:14.860Z"
+}</msg>
+<status status="PASS" endtime="20191228 21:13:55.181" starttime="20191228 21:13:55.180"></status>
+</kw>
+<msg timestamp="20191228 21:13:55.181" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:55.181" starttime="20191228 21:13:50.580"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:13:55.182" level="INFO">${code} = 200</msg>
+<status status="PASS" endtime="20191228 21:13:55.182" starttime="20191228 21:13:55.182"></status>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <doc>Fails if the given objects are unequal.</doc>
@@ -71,21 +583,1329 @@ json=None</msg>
 <arg>${code}</arg>
 <arg>200</arg>
 </arguments>
-<status status="PASS" endtime="20191226 22:50:29.851" starttime="20191226 22:50:29.851"></status>
+<status status="PASS" endtime="20191228 21:13:55.183" starttime="20191228 21:13:55.183"></status>
 </kw>
-<status status="PASS" endtime="20191226 22:50:29.852" critical="yes" starttime="20191226 22:50:27.485"></status>
+<kw name="Dictionary Should Contain Value" library="Collections">
+<doc>Fails if ``value`` is not found from ``dictionary``.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+<arg>Tiago</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:55.184" starttime="20191228 21:13:55.184"></status>
+</kw>
+<kw name="Dictionary Should Contain Value" library="Collections">
+<doc>Fails if ``value`` is not found from ``dictionary``.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+<arg>tiago@ninjaplus.com</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:55.185" starttime="20191228 21:13:55.185"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:13:55.186" critical="yes" starttime="20191228 21:13:50.580"></status>
 </test>
-<status status="PASS" endtime="20191226 22:50:29.855" starttime="20191226 22:50:27.298"></status>
+<test id="s1-s1-s2-t2" name="Test: User not found">
+<kw name="Get User" library="base_api">
+<arguments>
+<arg>9999</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Get Token" library="base_api">
+<assign>
+<var>${token}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:55.189" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:55.190" starttime="20191228 21:13:55.189"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:13:55.190" level="INFO">&amp;{body} = { email=tiago@ninjaplus.com | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:13:55.190" starttime="20191228 21:13:55.190"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:55.191" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:55.191" starttime="20191228 21:13:55.191"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/auth</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:55.192" level="INFO">POST Request using : uri=/auth, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"email": "tiago@ninjaplus.com", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:13:57.513" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:57.513" starttime="20191228 21:13:55.191"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:57.513" level="INFO">{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1OC4wMTMrMDA6MDAifQ.owr_VkK8kzav_VC-1Pd4rnYb9OIML58PBnrqQ7J2aU0",
+    "expire": "2019-12-29T00:18:58.013+00:00",
+    "userId": 1
+}</msg>
+<status status="PASS" endtime="20191228 21:13:57.513" starttime="20191228 21:13:57.513"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>JWT ${response.json()['token']}</arg>
+</arguments>
+<assign>
+<var>${token}</var>
+</assign>
+<msg timestamp="20191228 21:13:57.514" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1OC4wMTMrMDA6MDAifQ.owr_VkK8kzav_VC-1Pd4rnYb9OIML58PBnrqQ7J2aU0</msg>
+<status status="PASS" endtime="20191228 21:13:57.514" starttime="20191228 21:13:57.513"></status>
+</kw>
+<msg timestamp="20191228 21:13:57.514" level="INFO">${token} = JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1OC4wMTMrMDA6MDAifQ.owr_VkK8kzav_VC-1Pd4rnYb9OIML58PBnrqQ7J2aU0</msg>
+<status status="PASS" endtime="20191228 21:13:57.514" starttime="20191228 21:13:55.189"></status>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:57.514" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:57.515" starttime="20191228 21:13:57.514"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=${token}</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:57.515" level="INFO">&amp;{headers} = { Content-Type=application/json | Authorization=JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1OC4wMTMrMDA6MDAifQ.owr_VkK8kzav_VC-1Pd4rnYb9OIML58PBnrqQ7J2aU0 ...</msg>
+<status status="PASS" endtime="20191228 21:13:57.515" starttime="20191228 21:13:57.515"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user/${USER_ID}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:57.516" level="INFO">GET Request using : uri=/user/9999, params=None, timeout=None, allow_redirects=True
+headers={'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0', 'Connection': 'keep-alive', u'Content-Type': u'application/json', u'Authorization': u'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZXhwaXJlIjoiMjAxOS0xMi0yOVQwMDoxODo1OC4wMTMrMDA6MDAifQ.owr_VkK8kzav_VC-1Pd4rnYb9OIML58PBnrqQ7J2aU0'} 
+data=None 
+json=None</msg>
+<msg timestamp="20191228 21:13:59.781" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:59.781" starttime="20191228 21:13:57.516"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:59.781" level="INFO">Not Found</msg>
+<status status="PASS" endtime="20191228 21:13:59.782" starttime="20191228 21:13:59.781"></status>
+</kw>
+<msg timestamp="20191228 21:13:59.782" level="INFO">${response} = &lt;Response [404]&gt;</msg>
+<status status="PASS" endtime="20191228 21:13:59.782" starttime="20191228 21:13:55.188"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:13:59.783" level="INFO">${code} = 404</msg>
+<status status="PASS" endtime="20191228 21:13:59.783" starttime="20191228 21:13:59.783"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>404</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:59.783" starttime="20191228 21:13:59.783"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:13:59.784" critical="yes" starttime="20191228 21:13:55.188"></status>
+</test>
+<status status="PASS" endtime="20191228 21:13:59.787" starttime="20191228 21:13:50.574"></status>
+</suite>
+<suite source="c:\Robot-Ninja\specs\api\post_user.robot" id="s1-s1-s3" name="Post User">
+<test id="s1-s1-s3-t1" name="Test: Create a new user">
+<kw name="Remove User By Email" library="db">
+<arguments>
+<arg>${EMAIL}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:13:59.799" starttime="20191228 21:13:59.797"></status>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<doc>Returns the contents of a specified file.</doc>
+<arguments>
+<arg>${EXECDIR}/resources/json/post_200.json</arg>
+</arguments>
+<assign>
+<var>${body}</var>
+</assign>
+<msg timestamp="20191228 21:13:59.800" html="yes" level="INFO">Getting file '&lt;a href="file://c:\Robot-Ninja\resources\json\post_200.json"&gt;c:\Robot-Ninja\resources\json\post_200.json&lt;/a&gt;'.</msg>
+<msg timestamp="20191228 21:13:59.800" level="INFO">${body} = {
+    "full_name": "Bruce Wayne",
+    "email": "bruce@wayne.com",
+    "password": "pwd123"
+}</msg>
+<status status="PASS" endtime="20191228 21:13:59.800" starttime="20191228 21:13:59.799"></status>
+</kw>
+<kw name="Post user" library="base_api">
+<arguments>
+<arg>${body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:13:59.801" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:13:59.802" starttime="20191228 21:13:59.801"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:13:59.802" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:13:59.802" starttime="20191228 21:13:59.802"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:13:59.803" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={
+    "full_name": "Bruce Wayne",
+    "email": "bruce@wayne.com",
+    "password": "pwd123"
+} 
+json=None</msg>
+<msg timestamp="20191228 21:14:02.160" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:02.160" starttime="20191228 21:13:59.803"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:02.160" level="INFO">{
+    "id": 8,
+    "full_name": "Bruce Wayne",
+    "email": "bruce@wayne.com",
+    "password": "$2b$10$D/ezY7vYTCtb6ldf/pY/F.18LxGhnquvaIrxRcLE5YQq1NAR4chLe",
+    "updatedAt": "2019-12-29T00:14:02.562Z",
+    "createdAt": "2019-12-29T00:14:02.562Z"
+}</msg>
+<status status="PASS" endtime="20191228 21:14:02.160" starttime="20191228 21:14:02.160"></status>
+</kw>
+<msg timestamp="20191228 21:14:02.161" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:02.161" starttime="20191228 21:13:59.801"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:14:02.162" level="INFO">${code} = 200</msg>
+<status status="PASS" endtime="20191228 21:14:02.162" starttime="20191228 21:14:02.162"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>200</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:02.163" starttime="20191228 21:14:02.163"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:02.164" critical="yes" starttime="20191228 21:13:59.796"></status>
+</test>
+<test id="s1-s1-s3-t2" name="Test: Name required">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>full_name=${EMPTY}</arg>
+<arg>email=${EMPTY}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:14:02.169" level="INFO">&amp;{body} = { full_name= | email= | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:14:02.170" starttime="20191228 21:14:02.169"></status>
+</kw>
+<kw name="Post user" library="base_api">
+<arguments>
+<arg>${body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:02.171" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:14:02.171" starttime="20191228 21:14:02.171"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:14:02.172" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:14:02.172" starttime="20191228 21:14:02.171"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:14:02.172" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"full_name": "", "email": "", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:14:04.456" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:04.456" starttime="20191228 21:14:02.172"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:04.457" level="INFO">{
+    "msg": "Validation notEmpty on full_name failed"
+}</msg>
+<status status="PASS" endtime="20191228 21:14:04.457" starttime="20191228 21:14:04.456"></status>
+</kw>
+<msg timestamp="20191228 21:14:04.457" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:04.457" starttime="20191228 21:14:02.170"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:14:04.458" level="INFO">${code} = 412</msg>
+<status status="PASS" endtime="20191228 21:14:04.458" starttime="20191228 21:14:04.458"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>412</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:04.459" starttime="20191228 21:14:04.459"></status>
+</kw>
+<kw name="Dictionary Should Contain Value" library="Collections">
+<doc>Fails if ``value`` is not found from ``dictionary``.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+<arg>Validation notEmpty on full_name failed</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:04.459" starttime="20191228 21:14:04.459"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:04.460" critical="yes" starttime="20191228 21:14:02.168"></status>
+</test>
+<test id="s1-s1-s3-t3" name="Test: Email required">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>full_name=${FULL_NAME}</arg>
+<arg>email=${EMPTY}</arg>
+<arg>password=${PASSWORD}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:14:04.463" level="INFO">&amp;{body} = { full_name=Bruce Wayne | email= | password=pwd123 }</msg>
+<status status="PASS" endtime="20191228 21:14:04.463" starttime="20191228 21:14:04.462"></status>
+</kw>
+<kw name="Post user" library="base_api">
+<arguments>
+<arg>${body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:04.464" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:14:04.465" starttime="20191228 21:14:04.464"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:14:04.465" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:14:04.465" starttime="20191228 21:14:04.465"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:14:04.466" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"full_name": "Bruce Wayne", "email": "", "password": "pwd123"} 
+json=None</msg>
+<msg timestamp="20191228 21:14:06.730" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:06.731" starttime="20191228 21:14:04.465"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:06.731" level="INFO">{
+    "msg": "Validation notEmpty on email failed"
+}</msg>
+<status status="PASS" endtime="20191228 21:14:06.731" starttime="20191228 21:14:06.731"></status>
+</kw>
+<msg timestamp="20191228 21:14:06.731" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:06.731" starttime="20191228 21:14:04.464"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:14:06.732" level="INFO">${code} = 412</msg>
+<status status="PASS" endtime="20191228 21:14:06.732" starttime="20191228 21:14:06.732"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>412</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:06.733" starttime="20191228 21:14:06.733"></status>
+</kw>
+<kw name="Dictionary Should Contain Value" library="Collections">
+<doc>Fails if ``value`` is not found from ``dictionary``.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+<arg>Validation notEmpty on email failed</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:06.734" starttime="20191228 21:14:06.734"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:06.735" critical="yes" starttime="20191228 21:14:04.462"></status>
+</test>
+<test id="s1-s1-s3-t4" name="Test: Password required">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>full_name=${FULL_NAME}</arg>
+<arg>email=${EMAIL}</arg>
+<arg>password=${EMPTY}</arg>
+</arguments>
+<assign>
+<var>&amp;{body}</var>
+</assign>
+<msg timestamp="20191228 21:14:06.737" level="INFO">&amp;{body} = { full_name=Bruce Wayne | email=bruce@wayne.com | password= }</msg>
+<status status="PASS" endtime="20191228 21:14:06.737" starttime="20191228 21:14:06.737"></status>
+</kw>
+<kw name="Post user" library="base_api">
+<arguments>
+<arg>${body}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:06.738" level="INFO">Creating Session using : alias=nplus, url=http://ninjaplus-api:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20191228 21:14:06.739" starttime="20191228 21:14:06.738"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>Content-Type=application/json</arg>
+</arguments>
+<assign>
+<var>&amp;{headers}</var>
+</assign>
+<msg timestamp="20191228 21:14:06.739" level="INFO">&amp;{headers} = { Content-Type=application/json }</msg>
+<status status="PASS" endtime="20191228 21:14:06.739" starttime="20191228 21:14:06.739"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>nplus</arg>
+<arg>/user</arg>
+<arg>data=${body}</arg>
+<arg>headers=${headers}</arg>
+</arguments>
+<assign>
+<var>${response}</var>
+</assign>
+<msg timestamp="20191228 21:14:06.740" level="INFO">POST Request using : uri=/user, files=None, params=None, timeout=None, allow_redirects=True
+headers={'Connection': 'keep-alive', u'Content-Type': u'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'User-Agent': 'python-requests/2.22.0'} 
+data={"full_name": "Bruce Wayne", "email": "bruce@wayne.com", "password": ""} 
+json=None</msg>
+<msg timestamp="20191228 21:14:09.004" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:09.004" starttime="20191228 21:14:06.739"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${response.text}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:09.005" level="INFO">{
+    "msg": "Validation notEmpty on password failed"
+}</msg>
+<status status="PASS" endtime="20191228 21:14:09.005" starttime="20191228 21:14:09.004"></status>
+</kw>
+<msg timestamp="20191228 21:14:09.005" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:09.005" starttime="20191228 21:14:06.738"></status>
+</kw>
+<kw name="Convert To String" library="BuiltIn">
+<doc>Converts the given item to a Unicode string.</doc>
+<arguments>
+<arg>${response.status_code}</arg>
+</arguments>
+<assign>
+<var>${code}</var>
+</assign>
+<msg timestamp="20191228 21:14:09.006" level="INFO">${code} = 412</msg>
+<status status="PASS" endtime="20191228 21:14:09.006" starttime="20191228 21:14:09.006"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${code}</arg>
+<arg>412</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:09.007" starttime="20191228 21:14:09.007"></status>
+</kw>
+<kw name="Dictionary Should Contain Value" library="Collections">
+<doc>Fails if ``value`` is not found from ``dictionary``.</doc>
+<arguments>
+<arg>${response.json()}</arg>
+<arg>Validation notEmpty on password failed</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:09.008" starttime="20191228 21:14:09.008"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:09.009" critical="yes" starttime="20191228 21:14:06.737"></status>
+</test>
+<status status="PASS" endtime="20191228 21:14:09.011" starttime="20191228 21:13:59.790"></status>
+</suite>
+<status status="PASS" endtime="20191228 21:14:09.015" starttime="20191228 21:13:36.382"></status>
+</suite>
+<suite source="c:\Robot-Ninja\specs\web" id="s1-s2" name="Web">
+<suite source="c:\Robot-Ninja\specs\web\cadastro.robot" id="s1-s2-s1" name="Cadastro">
+<test id="s1-s2-s1-t1" name="Novo filme">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:10.036" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:14:19.302" starttime="20191228 21:14:10.036"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:19.305" starttime="20191228 21:14:19.302"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:14:23.426" starttime="20191228 21:14:19.305"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:23.426" starttime="20191228 21:14:10.036"></status>
+</kw>
+<kw name="Dado que estou logado com credenciais válidas" library="cadastro">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>tiago@ninjaplus.com</arg>
+</arguments>
+<msg timestamp="20191228 21:14:23.427" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:14:23.590" starttime="20191228 21:14:23.427"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>pwd123</arg>
+</arguments>
+<msg timestamp="20191228 21:14:23.590" level="INFO">Typing text 'pwd123' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:14:23.680" starttime="20191228 21:14:23.590"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:23.680" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:14:23.781" starttime="20191228 21:14:23.680"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:23.782" starttime="20191228 21:14:23.426"></status>
+</kw>
+<kw name="Quando eu faço o cadastro de um novo filme" library="cadastro">
+<kw name="Remove Movie By Title" library="db">
+<arguments>
+<arg>${Title}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:23.788" starttime="20191228 21:14:23.784"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_ADD}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:23.788" level="INFO">Clicking button 'css:.movie-add'.</msg>
+<status status="PASS" endtime="20191228 21:14:26.492" starttime="20191228 21:14:23.788"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_TITLE}</arg>
+<arg>${Title}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:26.492" level="INFO">Typing text 'Resident Evil' into text field 'css:input[name=title]'.</msg>
+<status status="PASS" endtime="20191228 21:14:26.940" starttime="20191228 21:14:26.492"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${DROP_STATUS}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:26.940" level="INFO">Clicking element 'css:input[placeholder=Status]'.</msg>
+<status status="PASS" endtime="20191228 21:14:27.006" starttime="20191228 21:14:26.940"></status>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` is visible.</doc>
+<arguments>
+<arg>${OPTION_AVAILABLE}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:27.255" starttime="20191228 21:14:27.006"></status>
+</kw>
+<kw name="Click Element" library="SeleniumLibrary">
+<doc>Click the element identified by ``locator``.</doc>
+<arguments>
+<arg>${OPTION_AVAILABLE}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:27.256" level="INFO">Clicking element 'xpath://li//span[contains(text(),"Disponível")]'.</msg>
+<status status="PASS" endtime="20191228 21:14:27.340" starttime="20191228 21:14:27.255"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_YEAR}</arg>
+<arg>${Year}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:27.340" level="INFO">Typing text '2002' into text field 'css:input[name=year]'.</msg>
+<status status="PASS" endtime="20191228 21:14:27.430" starttime="20191228 21:14:27.340"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_RDATE}</arg>
+<arg>${ReleaseDate}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:27.431" level="INFO">Typing text '01/12/2002' into text field 'css:input[name=release_date]'.</msg>
+<status status="PASS" endtime="20191228 21:14:27.578" starttime="20191228 21:14:27.430"></status>
+</kw>
+<kw type="for" name="${item} IN [ @{Cast} ]">
+<kw type="foritem" name="${item} = Milla Jovovich">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:27.579" level="INFO">Typing text 'Milla Jovovich' into text field 'css:.cast'.</msg>
+<status status="PASS" endtime="20191228 21:14:27.749" starttime="20191228 21:14:27.578"></status>
+</kw>
+<kw name="Press Keys" library="SeleniumLibrary">
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>TAB</arg>
+</arguments>
+<msg timestamp="20191228 21:14:27.750" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
+<msg timestamp="20191228 21:14:27.756" level="INFO">Pressing special key TAB to element.</msg>
+<status status="PASS" endtime="20191228 21:14:28.291" starttime="20191228 21:14:27.749"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:28.292" level="INFO">Milla Jovovich</msg>
+<status status="PASS" endtime="20191228 21:14:28.292" starttime="20191228 21:14:28.291"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:28.292" starttime="20191228 21:14:27.578"></status>
+</kw>
+<kw type="foritem" name="${item} = Ali Larter">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:28.293" level="INFO">Typing text 'Ali Larter' into text field 'css:.cast'.</msg>
+<status status="PASS" endtime="20191228 21:14:28.412" starttime="20191228 21:14:28.292"></status>
+</kw>
+<kw name="Press Keys" library="SeleniumLibrary">
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>TAB</arg>
+</arguments>
+<msg timestamp="20191228 21:14:28.413" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
+<msg timestamp="20191228 21:14:28.424" level="INFO">Pressing special key TAB to element.</msg>
+<status status="PASS" endtime="20191228 21:14:28.966" starttime="20191228 21:14:28.413"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:28.966" level="INFO">Ali Larter</msg>
+<status status="PASS" endtime="20191228 21:14:28.966" starttime="20191228 21:14:28.966"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:28.966" starttime="20191228 21:14:28.292"></status>
+</kw>
+<kw type="foritem" name="${item} = Ian Glen">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:28.967" level="INFO">Typing text 'Ian Glen' into text field 'css:.cast'.</msg>
+<status status="PASS" endtime="20191228 21:14:29.073" starttime="20191228 21:14:28.966"></status>
+</kw>
+<kw name="Press Keys" library="SeleniumLibrary">
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>TAB</arg>
+</arguments>
+<msg timestamp="20191228 21:14:29.074" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
+<msg timestamp="20191228 21:14:29.083" level="INFO">Pressing special key TAB to element.</msg>
+<status status="PASS" endtime="20191228 21:14:29.613" starttime="20191228 21:14:29.074"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:29.613" level="INFO">Ian Glen</msg>
+<status status="PASS" endtime="20191228 21:14:29.613" starttime="20191228 21:14:29.613"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:29.613" starttime="20191228 21:14:28.966"></status>
+</kw>
+<kw type="foritem" name="${item} = Shawn Roberts">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:29.614" level="INFO">Typing text 'Shawn Roberts' into text field 'css:.cast'.</msg>
+<status status="PASS" endtime="20191228 21:14:29.744" starttime="20191228 21:14:29.614"></status>
+</kw>
+<kw name="Press Keys" library="SeleniumLibrary">
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<arguments>
+<arg>${INPUT_CAST}</arg>
+<arg>TAB</arg>
+</arguments>
+<msg timestamp="20191228 21:14:29.745" level="INFO">Sending key(s) (u'TAB',) to css:.cast element.</msg>
+<msg timestamp="20191228 21:14:29.753" level="INFO">Pressing special key TAB to element.</msg>
+<status status="PASS" endtime="20191228 21:14:30.284" starttime="20191228 21:14:29.744"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${item}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:30.285" level="INFO">Shawn Roberts</msg>
+<status status="PASS" endtime="20191228 21:14:30.285" starttime="20191228 21:14:30.284"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:30.285" starttime="20191228 21:14:29.614"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:30.285" starttime="20191228 21:14:27.578"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${TEXT_PLOT}</arg>
+<arg>${Plot}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:30.285" level="INFO">Typing text 'Alice tem a missão de desativar a rainha vermelha na colmeia porque alguém jogou um vírus e deu ruim' into text field 'css:textarea[name=overview]'.</msg>
+<status status="PASS" endtime="20191228 21:14:30.952" starttime="20191228 21:14:30.285"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SAVE}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:30.953" level="INFO">Clicking button 'id:create-movie'.</msg>
+<status status="PASS" endtime="20191228 21:14:31.028" starttime="20191228 21:14:30.952"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:31.028" starttime="20191228 21:14:23.783"></status>
+</kw>
+<kw name="Então este filme deve ser exibido na lista" library="cadastro">
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${TABLE_ITEM}</arg>
+<arg>${Title}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:31.059" level="INFO">Suppressing StaleElementReferenceException from Selenium.</msg>
+<status status="PASS" endtime="20191228 21:14:31.788" starttime="20191228 21:14:31.030"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:31.788" starttime="20191228 21:14:31.029"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:14:32.124" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:32.124" starttime="20191228 21:14:31.789"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:14:34.238" starttime="20191228 21:14:32.124"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:34.238" starttime="20191228 21:14:31.789"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:34.239" critical="yes" starttime="20191228 21:14:10.035"></status>
+</test>
+<doc>Formulário de cadastro de filmes</doc>
+<status status="PASS" endtime="20191228 21:14:34.242" starttime="20191228 21:14:09.022"></status>
+</suite>
+<suite source="c:\Robot-Ninja\specs\web\login_com_sucesso.robot" id="s1-s2-s2" name="Login Com Sucesso">
+<test id="s1-s2-s2-t1" name="Login com sucesso">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:34.253" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:14:43.343" starttime="20191228 21:14:34.253"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:43.347" starttime="20191228 21:14:43.343"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:14:47.473" starttime="20191228 21:14:43.348"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:47.473" starttime="20191228 21:14:34.252"></status>
+</kw>
+<kw name="Fazendo Login com &quot;tiago@ninjaplus.com&quot; e senha &quot;pwd123&quot;" library="login">
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:47.476" level="INFO">Typing text 'tiago@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:14:47.623" starttime="20191228 21:14:47.475"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:47.623" level="INFO">Typing text 'pwd123' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:14:47.713" starttime="20191228 21:14:47.623"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:47.713" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:14:47.813" starttime="20191228 21:14:47.713"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:47.813" starttime="20191228 21:14:47.475"></status>
+</kw>
+<kw name="Devo ver o meu nome &quot;Tiago&quot; na área logada" library="login">
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${SPAN_USER}</arg>
+<arg>${username}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:14:50.694" starttime="20191228 21:14:47.815"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:50.694" starttime="20191228 21:14:47.814"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:14:51.047" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:14:51.047" starttime="20191228 21:14:50.696"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:14:53.160" starttime="20191228 21:14:51.047"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:53.160" starttime="20191228 21:14:50.695"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:14:53.160" critical="yes" starttime="20191228 21:14:34.252"></status>
+</test>
+<doc>O usuário informa suas credenciais de acesso e submete o formulário de login</doc>
+<status status="PASS" endtime="20191228 21:14:53.162" starttime="20191228 21:14:34.245"></status>
+</suite>
+<suite source="c:\Robot-Ninja\specs\web\login_sem_sucesso.robot" id="s1-s2-s3" name="Login Sem Sucesso">
+<test id="s1-s2-s3-t1" name="Senha inválida">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:14:53.173" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:15:04.127" starttime="20191228 21:14:53.173"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:04.129" starttime="20191228 21:15:04.127"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:15:08.254" starttime="20191228 21:15:04.130"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:08.254" starttime="20191228 21:14:53.172"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
+<arguments>
+<arg>papito@ninjaplus.com</arg>
+<arg>asdfgh</arg>
+<arg>Usuário e/ou senha inválidos</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:08.255" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:15:08.424" starttime="20191228 21:15:08.255"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:08.424" level="INFO">Typing text 'asdfgh' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:15:08.519" starttime="20191228 21:15:08.424"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:08.519" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:15:08.627" starttime="20191228 21:15:08.519"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:11.107" starttime="20191228 21:15:08.628"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:11.107" starttime="20191228 21:15:08.254"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:15:11.792" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:15:11.792" starttime="20191228 21:15:11.108"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:15:13.891" starttime="20191228 21:15:11.792"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:13.891" starttime="20191228 21:15:11.108"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:13.892" critical="yes" starttime="20191228 21:14:53.172"></status>
+</test>
+<test id="s1-s2-s3-t2" name="Usuario nao cadastrado">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:13.895" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:15:24.904" starttime="20191228 21:15:13.895"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:24.908" starttime="20191228 21:15:24.904"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:15:29.030" starttime="20191228 21:15:24.908"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:29.030" starttime="20191228 21:15:13.895"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
+<arguments>
+<arg>404@yahoo.com</arg>
+<arg>123456</arg>
+<arg>Usuário e/ou senha inválidos</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:29.031" level="INFO">Typing text '404@yahoo.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:15:29.173" starttime="20191228 21:15:29.031"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:29.174" level="INFO">Typing text '123456' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:15:29.264" starttime="20191228 21:15:29.174"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:29.264" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:15:29.364" starttime="20191228 21:15:29.264"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:31.865" starttime="20191228 21:15:29.364"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:31.865" starttime="20191228 21:15:29.030"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:15:32.544" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:15:32.544" starttime="20191228 21:15:31.867"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:15:34.644" starttime="20191228 21:15:32.544"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:34.644" starttime="20191228 21:15:31.867"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:34.645" critical="yes" starttime="20191228 21:15:13.894"></status>
+</test>
+<test id="s1-s2-s3-t3" name="Email nao informado">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:34.648" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:15:44.503" starttime="20191228 21:15:34.648"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:44.507" starttime="20191228 21:15:44.504"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:15:48.637" starttime="20191228 21:15:44.508"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:48.637" starttime="20191228 21:15:34.647"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
+<arguments>
+<arg>${EMPTY}</arg>
+<arg>abc123</arg>
+<arg>Opps. Cadê o email?</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:48.638" level="INFO">Typing text '' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:15:48.718" starttime="20191228 21:15:48.638"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:48.719" level="INFO">Typing text 'abc123' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:15:48.811" starttime="20191228 21:15:48.718"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:48.812" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:15:48.887" starttime="20191228 21:15:48.812"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:15:48.915" starttime="20191228 21:15:48.887"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:48.915" starttime="20191228 21:15:48.637"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:15:49.633" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:15:49.633" starttime="20191228 21:15:48.916"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:15:51.738" starttime="20191228 21:15:49.634"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:51.738" starttime="20191228 21:15:48.916"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:15:51.739" critical="yes" starttime="20191228 21:15:34.647"></status>
+</test>
+<test id="s1-s2-s3-t4" name="Senha nao informada">
+<kw type="setup" name="Abrir navegador" library="base">
+<kw name="Open Browser" library="SeleniumLibrary">
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<arguments>
+<arg>${DEFAULT_URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20191228 21:15:51.744" level="INFO">Opening browser 'chrome' to base url 'http://ninjaplus-web:5000/login'.</msg>
+<status status="PASS" endtime="20191228 21:16:01.838" starttime="20191228 21:15:51.743"></status>
+</kw>
+<kw name="Set Selenium Implicit Wait" library="SeleniumLibrary">
+<doc>Sets the implicit wait value used by Selenium.</doc>
+<arguments>
+<arg>10</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:16:01.841" starttime="20191228 21:16:01.838"></status>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" endtime="20191228 21:16:05.959" starttime="20191228 21:16:01.842"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:16:05.959" starttime="20191228 21:15:51.743"></status>
+</kw>
+<kw name="Logando com credenciais inválidas devo ver uma mensagem de alerta" library="login">
+<arguments>
+<arg>papito@ninjaplus.com</arg>
+<arg>${EMPTY}</arg>
+<arg>Opps. Cadê a senha?</arg>
+</arguments>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_EMAIL}</arg>
+<arg>${email}</arg>
+</arguments>
+<msg timestamp="20191228 21:16:05.960" level="INFO">Typing text 'papito@ninjaplus.com' into text field 'css:input[name=email]'.</msg>
+<status status="PASS" endtime="20191228 21:16:06.127" starttime="20191228 21:16:05.960"></status>
+</kw>
+<kw name="Input Text" library="SeleniumLibrary">
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<arguments>
+<arg>${INPUT_PASS}</arg>
+<arg>${pass}</arg>
+</arguments>
+<msg timestamp="20191228 21:16:06.129" level="INFO">Typing text '' into text field 'css:input[name=password]'.</msg>
+<status status="PASS" endtime="20191228 21:16:06.192" starttime="20191228 21:16:06.128"></status>
+</kw>
+<kw name="Click Button" library="SeleniumLibrary">
+<doc>Clicks the button identified by ``locator``.</doc>
+<arguments>
+<arg>${BUTTON_SUBMIT}</arg>
+</arguments>
+<msg timestamp="20191228 21:16:06.193" level="INFO">Clicking button 'id:login'.</msg>
+<status status="PASS" endtime="20191228 21:16:06.268" starttime="20191228 21:16:06.193"></status>
+</kw>
+<kw name="Wait Until Element Contains" library="SeleniumLibrary">
+<doc>Waits until the element ``locator`` contains ``text``.</doc>
+<arguments>
+<arg>${DIV_ALERT}</arg>
+<arg>${expect_message}</arg>
+</arguments>
+<status status="PASS" endtime="20191228 21:16:06.293" starttime="20191228 21:16:06.268"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:16:06.293" starttime="20191228 21:16:05.959"></status>
+</kw>
+<kw type="teardown" name="Fechar navegador" library="base">
+<kw name="Capture Page Screenshot" library="SeleniumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20191228 21:16:07.059" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-6.png"&gt;&lt;img src="selenium-screenshot-6.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20191228 21:16:07.059" starttime="20191228 21:16:06.295"></status>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" endtime="20191228 21:16:09.201" starttime="20191228 21:16:07.059"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:16:09.201" starttime="20191228 21:16:06.294"></status>
+</kw>
+<status status="PASS" endtime="20191228 21:16:09.202" critical="yes" starttime="20191228 21:15:51.742"></status>
+</test>
+<doc>O usuário informa suas credenciais incorretas e é notificado com uma mensagem de alerta</doc>
+<status status="PASS" endtime="20191228 21:16:09.210" starttime="20191228 21:14:53.165"></status>
+</suite>
+<status status="PASS" endtime="20191228 21:16:09.221" starttime="20191228 21:14:09.020"></status>
+</suite>
+<status status="PASS" endtime="20191228 21:16:09.234" starttime="20191228 21:13:36.359"></status>
 </suite>
 <statistics>
 <total>
-<stat fail="0" pass="1">Critical Tests</stat>
-<stat fail="0" pass="1">All Tests</stat>
+<stat fail="0" pass="14">Critical Tests</stat>
+<stat fail="0" pass="14">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat fail="0" id="s1" name="Post User" pass="1">Post User</stat>
+<stat fail="0" id="s1" name="Specs" pass="14">Specs</stat>
+<stat fail="0" id="s1-s1" name="Api" pass="8">Specs.Api</stat>
+<stat fail="0" id="s1-s1-s1" name="Delete User" pass="2">Specs.Api.Delete User</stat>
+<stat fail="0" id="s1-s1-s2" name="Get User" pass="2">Specs.Api.Get User</stat>
+<stat fail="0" id="s1-s1-s3" name="Post User" pass="4">Specs.Api.Post User</stat>
+<stat fail="0" id="s1-s2" name="Web" pass="6">Specs.Web</stat>
+<stat fail="0" id="s1-s2-s1" name="Cadastro" pass="1">Specs.Web.Cadastro</stat>
+<stat fail="0" id="s1-s2-s2" name="Login Com Sucesso" pass="1">Specs.Web.Login Com Sucesso</stat>
+<stat fail="0" id="s1-s2-s3" name="Login Sem Sucesso" pass="4">Specs.Web.Login Sem Sucesso</stat>
 </suite>
 </statistics>
 <errors>
