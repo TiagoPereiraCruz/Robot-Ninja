@@ -1,16 +1,23 @@
 *** Settings ***
 Resource    ./base_api.robot
 
+*** Variables ***
+# Data Test
+${BASE_URL}     http://ninjaplus-api:3000
+${EMAIL}        tiago@ninjaplus.com
+${PASSWORD}     pwd123
+${USER_ID}      1 
+
 *** Test Cases ***
 Test: Unique Id
-    ${response}=                        Get user                ${USER_ID}
+    ${response}=                        Get user                ${USER_ID}      ${EMAIL}        ${PASSWORD}
     ${code}=                            convert to string       ${response.status_code}
     should be equal                     ${code}                 200
     dictionary should contain value     ${response.json()}      Tiago
     dictionary should contain value     ${response.json()}      tiago@ninjaplus.com
 
 Test: User not found
-    ${response}=                        Get user                9999
+    ${response}=                        Get user                9999        ${EMAIL}        ${PASSWORD}
     ${code}=                            convert to string       ${response.status_code}
     should be equal                     ${code}                 404
 

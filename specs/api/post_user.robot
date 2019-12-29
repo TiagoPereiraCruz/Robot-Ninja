@@ -3,7 +3,7 @@ Resource    ./base_api.robot
 
 *** Variables ***
 # Data Test
-${FULL_NAME}     Bruce Wayne
+${FULL_NAME}    Bruce Wayne
 ${EMAIL}        bruce@wayne.com
 ${PASSWORD}     pwd123
 
